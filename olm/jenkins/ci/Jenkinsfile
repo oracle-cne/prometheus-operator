@@ -1,0 +1,16 @@
+@Library('olcne-pipeline') _
+import com.oracle.olcne.pipeline.BranchPattern
+
+String imageTag = "v0.84.0"
+
+olcnePipeline(
+        branchPattern: new BranchPattern(master: 'oracle/release/0.84.0', feature: '(?!^release/.*$)(^.*$)'),
+        containers: [('container-registry.oracle.com/olcne/prometheus-operator:' + imageTag ): 'olcne/prometheus-operator:' + imageTag,
+                     ('container-registry.oracle.com/olcne/prometheus-admission-webhook:' + imageTag ): 'olcne/prometheus-admission-webhook:' + imageTag,
+                     ('container-registry.oracle.com/olcne/prometheus-config-reloader:' + imageTag ): 'olcne/prometheus-config-reloader:' + imageTag],
+        golang: "1.24.3",
+        platforms: [ 'ol8'],
+        architectures: ['x86_64', 'aarch64'],
+        publishImage: true,
+        yumOL8Repos: ['ol8_appstream']
+)
