@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-name="prometheus-operator"
 version="0.85.0"
 registry="container-registry.oracle.com/olcne"
 comp_prefix=prometheus
