@@ -17,7 +17,7 @@ RUN git config --global --add safe.directory $(pwd) && \
 FROM container-registry.oracle.com/os/oraclelinux:9-slim
 
 COPY LICENSE THIRD_PARTY_LICENSES.txt olm/SECURITY.md /usr/share/licenses/prometheus-config-reloader
-COPY --from=builder bin/prometheus-config-reloader /usr/bin/prometheus-config-reloader
+COPY --from=builder /workspace/go/src/github.com/oracle-cne/prometheus-operator/bin/prometheus-config-reloader /usr/bin/prometheus-config-reloader
 
 RUN microdnf update -y && \
     microdnf clean all && \
