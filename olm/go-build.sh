@@ -18,6 +18,6 @@ comps=(operator config-reloader admission-webhook)
 for i in ${!tags[@]}; do
 	go build -trimpath=false -v -o bin/${comp_prefix}-${comps[i]} \
       -ldflags "${ldflags}" \
-      "${GOPATH_SRC}"/cmd/${comps[i]
+      "${GOPATH_SRC}"/cmd/${comps[i]}
   ./bin/${comp_prefix}-${comps[i]} --version
 done
