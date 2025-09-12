@@ -15,7 +15,7 @@ ldflags="
         -X github.com/prometheus/common/version.BuildDate=${BUILD_DATE}"
 
 comps=(operator config-reloader admission-webhook)
-for i in ${!tags[@]}; do
+for i in ${!comps[@]}; do
 	go build -trimpath=false -v -o bin/${comp_prefix}-${comps[i]} \
       -ldflags "${ldflags}" \
       "${GOPATH_SRC}"/cmd/${comps[i]}
