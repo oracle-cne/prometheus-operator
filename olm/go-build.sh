@@ -14,10 +14,11 @@ ldflags="
         -X github.com/prometheus/common/version.BuildUser=${USER}@${HOST}
         -X github.com/prometheus/common/version.BuildDate=${BUILD_DATE}"
 
-comps=(operator config-reloader admission-webhook)
-for i in ${!comps[@]}; do
-	go build -trimpath=false -v -o bin/${comp_prefix}-${comps[i]} \
+compsInput=(operator prometheus-config-reloader admission-webhook)
+compsOutput=(prometheus-operator prometheus-config-reloader prometheus-admission-webhook)
+for i in ${!compsInput[@]}; do
+	go build -trimpath=false -v -o bin/${compsOutput[i]} \
       -ldflags "${ldflags}" \
-      "${GOPATH_SRC}"/cmd/${comps[i]}
-  ./bin/${comp_prefix}-${comps[i]} --version
+      "${GOPATH_SRC}"/cmd/${compsInput[i]}
+  ./bin/${compsOutput[i]} --version
 done
