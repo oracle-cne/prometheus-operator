@@ -1,0 +1,14 @@
+@Library('olcne-pipeline') _
+import com.oracle.olcne.pipeline.BranchPattern
+
+String imageTag = "v0.90.1"
+
+imagePipeline(
+        branchPattern: new BranchPattern(master: 'oracle/release/0.90.1', feature: '(?!^release/.*$)(^.*$)'),
+        containers: [('container-registry.oracle.com/olcne/prometheus-operator:' + imageTag ): 'olcne/prometheus-operator:' + imageTag,
+                     ('container-registry.oracle.com/olcne/prometheus-admission-webhook:' + imageTag ): 'olcne/prometheus-admission-webhook:' + imageTag,
+                     ('container-registry.oracle.com/olcne/prometheus-config-reloader:' + imageTag ): 'olcne/prometheus-config-reloader:' + imageTag],
+        platforms: [ 'ol9'],
+        architectures: ['x86_64', 'aarch64'],
+        buildScript: "sh olm/build-image.sh"
+)
