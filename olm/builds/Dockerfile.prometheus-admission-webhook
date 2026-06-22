@@ -1,13 +1,17 @@
 FROM container-registry.oracle.com/os/oraclelinux:9 AS builder
 
+ARG GOLANG_VERSION
+
 RUN dnf config-manager --enable ol9_codeready_builder && \
-    dnf -y install git make golang hostname && \
+    dnf -y install git make golang-${GOLANG_VERSION} hostname && \
+    dnf clean all && \
+    rm -rf /var/cache/yum/* && \
     go version
 
 # Copy the contents of the repository
 COPY . /workspace/go/src/github.com/oracle-cne/prometheus-operator
 
-ENV GOPATH=/workspace/go CGO_ENABLED=0
+ENV GOPATH=/workspace/go CGO_ENABLED=0 GOTOOLCHAIN=local
 ENV GOPATH_SRC=$GOPATH/src/github.com/oracle-cne/prometheus-operator
 WORKDIR /workspace/go/src/github.com/oracle-cne/prometheus-operator
 
